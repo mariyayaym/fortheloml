@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Only Your</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Great+Vibes&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f6f4f2;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+    }
+
+    .canvas {
+      width: 900px;
+      max-width: 95%;
+      background: #f9f8f6;
+      padding: 60px 50px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 50px;
+      position: relative;
+    }
+
+    /* LEFT PHOTO STRIP */
+    .strip {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 6px 6px 18px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      width: 220px;
+      transform: rotate(-2deg);
+    }
+
+    .polaroid:nth-child(2) { transform: rotate(2deg); }
+    .polaroid:nth-child(3) { transform: rotate(-1deg); }
+
+    .polaroid img {
+      width: 100%;
+      display: block;
+      filter: grayscale(100%);
+    }
+
+    .polaroid span {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .sticker {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      font-size: 28px;
+      opacity: 0.7;
+    }
+
+    /* RIGHT TEXT */
+    .content {
+      position: relative;
+    }
+
+    .title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 72px;
+      margin: 0;
+      line-height: 0.9;
+    }
+
+    .title small {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin-left: 10px;
+    }
+
+    .letter {
+      margin-top: 30px;
+      max-width: 360px;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .handwrite {
+      margin-top: 30px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 26px;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      opacity: 0.7;
+    }
+
+    .decor {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 28px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 800px) {
+      .canvas {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .title { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="canvas">
+  <!-- LEFT -->
+  <div class="strip">
+    <div class="sticker">★</div>
+
+    <div class="polaroid">
+      <img src="WhatsApp Image 2026-01-04 at 8.10.31 AM.jpeg" />
+      <span>me and my sweet baby :33</span>
+    </div>
+
+    <div class="polaroid">
+      <img src="WhatsApp Image 2026-01-04 at 8.10.37 AM.jpeg" />
+      <span>29.11 ♡</span>
+    </div>
+
+    <div class="polaroid">
+      <img src="WhatsApp Image 2026-01-04 at 8.10.35 AM.jpeg" />
+      <span>28.11 ♡</span>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="content">
+    <h1 class="title">Dear <small>Mudassir</small></h1>
+
+    <div class="letter">
+      Happy Anniversary, you never fail to make me laugh, you never fail to make me smile, this year has been a little harsh but you have made me love every single second of the most unstable and scary year ever. You have made me realize that as long as youre alive, I can go through the strongest battles with no fear. You’re so amazing and youre such an admirable man, youre my man, my husband, my sweetheart, my silver lining, im grateful for all that we’ve been through, ill continue to be with you through tough times and love you like no other, I may be a little sick in the head sometimes, my behavior may change, but whats never gonna change is my love for you, youre my handsome man, a man with a beautiful soul and a beautiful face, someone i desire to wake up next to for the rest of my life, you always make me smile and you always are there for me at my lowest, i miss you all of the time, i miss you even in the loudest room, youre a part of me, youre the owner of my heart, the owner of my mind, you have seen me in ways others could only imagine, you have all of my love for life, you have all of me for life, i will marry you one day to prove that love does, in fact, beat every feeling, every emotion. My love for you is stronger than the word love itself, love? for me, is a beautiful man, a beautiful dark haired, dark eyed man, a man that has the prettiest smile, and eyes to die for, you have the ability to amuse me and intrigue me with your thoughts, how you think and how you act is so attracting and alluring, im attracted to your mind, your heart, and your entire existence. You are my other half, the other half i need when i feel empty, the other half that i need when I feel like everything is collapsing on me, my other half when it feels like my heart might explode and shatter into a million pieces. You are the cure to every disease, you are the cure to my sickness, with you, i feel at ease, as you are my peace. 
+
+
+
+– your beloved, maryam 
+    </div>
+
+    <div class="handwrite"> i love you jaanu </div>
+    <div class="note"> 4th January 2026</div>
+
+  
+  </div>
+</div>
+
+</body>
+</html>

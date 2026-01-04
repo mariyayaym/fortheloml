@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Photobooth with Preview</title>
+<style>
+     @font-face {
+  font-family: 'bbd';
+  src: url('../website/Baby\ Doll.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+body{
+  background-image: url(../website/106ff9605dd7daea16ba7d6e00d2a6fe.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin:0;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  font-family:'Playfair Display',serif;
+}
+#disclaimer {
+  background:#ffcccc;
+  color:#900;
+  padding:8px 12px;
+  border-radius:8px;
+  margin-bottom:10px;
+  text-align:center;
+  font-size:0.9rem;
+}
+#photobooth-container{
+  width:100%;
+  max-width:570px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+ 
+}
+#photobooth{
+  position:relative;
+  width:100%;
+  aspect-ratio:4/3;
+}
+video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:14px;
+  border:4px solid white;
+  transform:scaleX(-1);
+}
+#stickerOverlay{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  max-width:70%;
+  max-height:70%;
+  pointer-events:none;
+}
+#carousel-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center everything */
+  gap: 8px; /* space between arrows and stickers */
+}
+#carousel {
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
+  justify-content: center; /* center stickers in the middle */
+}
+#carousel img{
+  width:77px;
+  border-radius:8px;
+  border:2px solid transparent;
+  cursor:pointer;
+  flex-shrink:0;
+}
+#carousel img.selected{
+  border-color:#ff6b6b;
+}
+button{
+  border:none;
+  border-radius:8px;
+  padding:6px 10px;
+  background:#ffb6b3;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:disabled{
+  background:#ccc;
+}
+#controls{
+  font-family: bbd;
+  display:flex;
+  gap:12px;
+ 
+}
+#notifications{
+  position:fixed;
+  top:12px;
+  right:12px;
+}
+.notification{
+  font-family: bbd;
+  font-size: 23px;
+  background:#ffb6b3;
+  color:white;
+  padding:8px 14px;
+  border-radius:12px;
+  animation:toast 4s forwards; /* total 3s */
+}
+
+@keyframes toast {
+  0% { opacity: 0; transform: translateX(100%); }   /* start off-screen */
+  25% { opacity: 1; transform: none; }             /* fade in during first 1s (25% of 4s) */
+  75% { opacity: 1; }                              /* stay fully visible for 2s (50% of 4s) */
+  100% { opacity: 0; transform: translateX(100%); }/* fade out during last 1s (25% of 4s) */
+}
+
+
+#savePopup {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.7);
+  z-index: 2000;
+}
+#savePopup .popupContent {
+  background: #ffb6b3;
+  color: white;
+  padding: 20px 28px;
+  border-radius: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+}
+#savePopup img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+#savePopup .popupContent button {
+  background: white;
+  color: #ff6b6b;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#savePopup .popupContent button:hover {
+  background: #ffeaea;
+}
+</style>
+</head>
+<body>
+
+<div id="disclaimer">This photobooth works best on desktop browsers. Some features may not work on mobile devices.</div>
+
+<div id="photobooth-container">
+  <div id="photobooth">
+    <video id="camera" autoplay playsinline></video>
+    <img id="stickerOverlay">
+  </div>
+
+  <div id="carousel-container">
+    <button id="prev">&lt;</button>
+    <div id="carousel"></div>
+    <button id="next">&gt;</button>
+  </div>
+
+  <div id="controls">
+    <button id="snap" disabled style="font-size: larger;" style="font-family: bbd;">take a picture</button>
+    <button id="remove" style="font-size: larger;">remove filter</button>
+  </div>
+</div>
+
+<div id="notifications"></div>
+
+<!-- SAVE POPUP -->
+<div id="savePopup">
+  <div class="popupContent">
+    <img id="previewImg">
+    <div>Do you want to save this photo?</div>
+    <div style="display:flex; justify-content:center; gap:10px;">
+      <button id="popupSave">Save</button>
+      <button id="popupRetake">Retake</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById("camera");
+const snapBtn = document.getElementById("snap");
+const removeBtn = document.getElementById("remove");
+const stickerOverlay = document.getElementById("stickerOverlay");
+const carousel = document.getElementById("carousel");
+const notifications = document.getElementById("notifications");
+const savePopup = document.getElementById("savePopup");
+const popupSave = document.getElementById("popupSave");
+const popupRetake = document.getElementById("popupRetake");
+const previewImg = document.getElementById("previewImg");
+
+const stickers = ["hat.png","sunglasses.png","heart.png","cat.png","dog.png","star.png","partyhat.png"];
+let selectedSticker = "";
+let carouselIndex = 0;
+
+// Notifications
+function notify(msg){
+  const n = document.createElement("div");
+  n.className = "notification";
+  n.textContent = msg;
+  notifications.appendChild(n);
+  setTimeout(()=>n.remove(),3000);
+}
+
+// Carousel render
+function renderCarousel(){
+  carousel.innerHTML = "";
+  stickers.slice(carouselIndex, carouselIndex+4).forEach(s=>{
+    const img = document.createElement("img");
+    img.src = s;
+    if(s===selectedSticker) img.classList.add("selected");
+    img.onclick = ()=>{
+      selectedSticker = s;
+      stickerOverlay.src = s;
+      renderCarousel();
+      notify("Sticker selected");
+    };
+    carousel.appendChild(img);
+  });
+}
+renderCarousel();
+document.getElementById("prev").onclick = ()=>{if(carouselIndex>0){carouselIndex--; renderCarousel();}};
+document.getElementById("next").onclick = ()=>{if(carouselIndex<stickers.length-4){carouselIndex++; renderCarousel();}};
+removeBtn.onclick = ()=>{
+  selectedSticker="";
+  stickerOverlay.src="";
+  renderCarousel();
+};
+
+// Camera
+navigator.mediaDevices.getUserMedia({video:true}).then(stream=>{
+  video.srcObject=stream;
+  snapBtn.disabled=false;
+  notify("Camera ready");
+}).catch(()=>notify("Camera access denied"));
+
+// Snap photo
+snapBtn.onclick = ()=>{
+  const canvas=document.createElement("canvas");
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
+  const ctx = canvas.getContext("2d");
+
+  ctx.translate(canvas.width,0);
+  ctx.scale(-1,1);
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  ctx.setTransform(1,0,0,1,0,0);
+
+  if(selectedSticker){
+    const img=new Image();
+    img.src=selectedSticker;
+    img.onload = ()=>{
+      const v = video.getBoundingClientRect();
+      const s = stickerOverlay.getBoundingClientRect();
+      const scale = canvas.width / v.width;
+      ctx.drawImage(img,(s.left-v.left)*scale,(s.top-v.top)*scale,s.width*scale,s.height*scale);
+      showPreview();
+    };
+  } else showPreview();
+
+  function showPreview(){
+    previewImg.src = canvas.toDataURL("image/png");
+    savePopup.style.display="flex";
+
+    popupSave.onclick = ()=>{
+      canvas.toBlob(blob=>{
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `photo_${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        notify("Photo saved!");
+        savePopup.style.display="none";
+      },"image/png");
+    };
+
+    popupRetake.onclick = ()=>{
+      savePopup.style.display="none";
+      notify("Retake your photo");
+    };
+  }
+};
+</script>
+</body>
+</html>

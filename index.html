@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>our special day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+  font-family: 'bbd';
+  src: url('../website/Baby\ Doll.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'c1';
+  src: url('../website/Aston Script.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'c2';
+  src: url('../website/Tempting\ -\ PERSONAL\ USE\ ONLY.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+    :root {
+      
+      --red: #6b3e3e;
+      --cream: #edebdf;
+      --pink: #f6c1cc;
+      --brown: #7a4a2e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-image: url(../website/₊✩‧₊˚౨ৎ˚₊✩‧₊.jpeg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--brown);
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--cream);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      border: 2px dashed var(--pink);
+      position: relative;
+    }
+
+    .card::after {
+      content: '❤';
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      
+      padding: 0 6px;
+      color: var(--red);
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px dotted var(--pink);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 18px;
+      background: var(--red);
+      color: white;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .button:hover {
+      background: #8f2d2d;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1 style="font-family: c1; font-size:50px;">Happy Anniversary
+
+      </h1>
+      <p>a year spent together full of love </p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2 style="font-family: c2;" > photobooth</h2>
+        <p style="font-family: bbd;" > created with love </p>
+        <a href="photobooth.html" class="button">open</a>
+      </div>
+
+      <div class="card">
+        <h2 style="font-family: c2;" >a letter</h2>
+        <p style="font-family: bbd;" >written with love</p>
+        <a href="../website/letter.html" class="button">open</a>
+      </div>
+
+      <div class="card">
+        <h2 style="font-family: c2;" >a small gift</h2>
+        <p style="font-family: bbd;" >made with love </p>
+        <a href="../website/maririzz.mov" class="button">click to download</a>
+      </div>
+    </section>
+
+    <footer>
+      happy anniversary baby ♡
+    </footer>
+  </div>
+</body>
+</html>
